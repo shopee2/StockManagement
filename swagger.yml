@@ -1,0 +1,136 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key special-key to test the authorization     filters."
+  version: "1.0.0"
+  title: "Stock Management System"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+- name: "category"
+  description: ""
+- name: "product"
+  description: ""
+schemes:
+- "https"
+- "http"
+paths:
+  /category:
+    get:
+      tags:
+      - "category"
+      summary: "List all categories"
+    post:
+      tags:
+      - "category"
+      summary: "Add a new category"
+      description: ""
+      operationId: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Category object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Category"
+      responses:
+        "200":
+          description: "Category added"
+        "405":
+          description: "Invalid input"
+  /category/{id}:
+    get:
+      tags:
+      - "category"
+      summary: "Retrieve category name and descriptions"
+    put:
+      tags:
+      - "category"
+      summary: "Update an existing category"
+    patch:
+      tags:
+      - "category"
+      summary: "Partially update an existing category"
+    delete:
+      tags:
+      - "category"
+      summary: "Delete a category"
+  /category/{id}/products:
+    get:
+      tags:
+      - "category"
+      summary: "List products in category"
+  /category/{id}/count:
+    get:
+      tags:
+      - "category"
+      summary: "Count products in category"
+
+  /product:
+    get:
+      tags:
+      - "product"
+      summary: "List all products"
+    post:
+      tags:
+      - "product"
+      summary: "Add a new product"
+    patch:
+      tags:
+      - "product"
+      summary: "Batch update a products"
+    delete:
+      tags:
+      - "product"
+      summary: "Batch delete a products"
+  /product/{id}:
+    get:
+      tags:
+      - "product"
+      summary: "Retrieve product name and descriptions"
+    put:
+      tags:
+      - "product"
+      summary: "Update an existing product"
+    patch:
+      tags:
+      - "product"
+      summary: "Partially update an existing product"
+    delete:
+      tags:
+      - "product"
+      summary: "Delete a product"
+
+definitions:
+  Category:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      description:
+        type: "string"
+  Product:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      inventory:
+        type: "integer"
+        format: "int64"
