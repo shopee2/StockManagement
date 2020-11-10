@@ -167,10 +167,29 @@ paths:
       tags:
       - "product"
       summary: "List all products"
+      responses:
+        '200':
+          description: "All products listed"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Product"
     post:
       tags:
       - "product"
       summary: "Add a new product"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Product object that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Product"
+      responses:
+        "200":
+          description: "Product added"
+        "405":
+          description: "Invalid input"
     patch:
       tags:
       - "product"
@@ -184,18 +203,72 @@ paths:
       tags:
       - "product"
       summary: "Retrieve product name and descriptions"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of product"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        '200':
+          description: "Product metadata"
+          schema:
+            $ref: "#/definitions/Product"
     put:
       tags:
       - "product"
       summary: "Update an existing product"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of product to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Modified product object"
+        required: true
+        schema:
+          $ref: "#/definitions/Product"
+      responses:
+        '200':
+          description: "Category updated"
     patch:
       tags:
       - "product"
       summary: "Partially update an existing product"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of product to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Modified product object"
+        required: true
+        schema:
+          $ref: "#/definitions/Product"
+      responses:
+        '200':
+          description: "Product updated"
     delete:
       tags:
       - "product"
       summary: "Delete a product"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of product to be deleted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        '200':
+          description: "Product deleted successfully"
 
 definitions:
   Category:
