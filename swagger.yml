@@ -130,12 +130,38 @@ paths:
       tags:
       - "category"
       summary: "List products in category"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of category to be listed"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        '200':
+          description: "All products in category"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Product"
   /category/{id}/count:
     get:
       tags:
       - "category"
       summary: "Count products in category"
-
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of category to be counted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        '200':
+          description: "Products counts in category"
+          schema:
+            type: "integer"
+            format: "int64"
   /product:
     get:
       tags:
