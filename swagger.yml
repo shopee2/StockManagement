@@ -25,6 +25,13 @@ paths:
       tags:
       - "category"
       summary: "List all categories"
+      responses:
+        '200':
+          description: "All category listed"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Category"
     post:
       tags:
       - "category"
@@ -52,18 +59,72 @@ paths:
       tags:
       - "category"
       summary: "Retrieve category name and descriptions"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of category"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        '200':
+          description: "Category metadata"
+          schema:
+            $ref: "#/definitions/Category"
     put:
       tags:
       - "category"
       summary: "Update an existing category"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of category to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Modified category object"
+        required: true
+        schema:
+          $ref: "#/definitions/Category"
+      responses:
+        '200':
+          description: "Category updated"
     patch:
       tags:
       - "category"
       summary: "Partially update an existing category"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of category to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Modified category object"
+        required: true
+        schema:
+          $ref: "#/definitions/Category"
+      responses:
+        '200':
+          description: "Category updated"
     delete:
       tags:
       - "category"
       summary: "Delete a category"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of category to be deleted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        '200':
+          description: "Category deleted successfully"
   /category/{id}/products:
     get:
       tags:
