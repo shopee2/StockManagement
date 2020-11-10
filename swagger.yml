@@ -131,6 +131,12 @@ definitions:
         type: "string"
       description:
         type: "string"
-      inventory:
+      stock:
+        type: "integer"
+        format: "int64"
+      shopId:
+        type: "integer"
+        format: "int64"
+      categoryId:
         type: "integer"
         format: "int64"
