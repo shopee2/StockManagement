@@ -9,8 +9,8 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "petstore.swagger.io"
-basePath: "/v2"
+# host: "petstore.swagger.io"
+# basePath: "/v2"
 tags:
 - name: "category"
   description: ""
@@ -194,10 +194,34 @@ paths:
       tags:
       - "product"
       summary: "Batch update a products"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Modified products array"
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: "#/definitions/Product"
+      responses:
+        '200':
+          description: "Products updated"
     delete:
       tags:
       - "product"
       summary: "Batch delete a products"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "IDs of products to be deleted"
+        required: true
+        schema:
+          type: array
+          items:
+            type: integer
+      responses:
+        '200':
+          description: "Products deleted"
   /product/{id}:
     get:
       tags:
@@ -310,3 +334,6 @@ definitions:
       categoryId:
         type: "integer"
         format: "int64"
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /phwts/Stock/1.0
