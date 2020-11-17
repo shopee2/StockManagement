@@ -11,6 +11,10 @@ tags:
   description: ""
 - name: "product"
   description: ""
+host: stock.phwt.me
+basePath: /
+schemes:
+ - http
 paths:
   /category:
     get:
@@ -270,15 +274,3 @@ definitions:
       categoryId:
         type: "integer"
         format: "int64"
-# Added by API Auto Mocking Plugin
-# host: stock.phwt.me
-# basePath: /
-# Added by API Auto Mocking Plugin
-# schemes:
-#  - http
-# Added by API Auto Mocking Plugin
-host: virtserver.swaggerhub.com
-basePath: /phwts/Stock/1.0
-schemes:
- - https
- - http
