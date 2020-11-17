@@ -15,17 +15,19 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class CategoryService {
 
+    private final String COLLECTION = "categories";
+
     public void createCategory(Category category) {
         Firestore db = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> collectionsApiFuture = db
-                .collection("categories")
+                .collection(COLLECTION)
                 .document(Integer.toString(category.getId()))
                 .set(category);
     }
 
     public List<Category> getCategories() throws ExecutionException, InterruptedException {
         Firestore db = FirestoreClient.getFirestore();
-        CollectionReference documentReference = db.collection("categories");
+        CollectionReference documentReference = db.collection(COLLECTION);
 
         ApiFuture<QuerySnapshot> future = documentReference.get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
@@ -41,7 +43,7 @@ public class CategoryService {
 
     public Category getCategory(int id) throws InterruptedException, ExecutionException, DocumentNotFoundException {
         Firestore db = FirestoreClient.getFirestore();
-        DocumentReference documentReference = db.collection("categories").document(Integer.toString(id));
+        DocumentReference documentReference = db.collection(COLLECTION).document(Integer.toString(id));
         ApiFuture<DocumentSnapshot> future = documentReference.get();
         DocumentSnapshot document = future.get();
 
@@ -55,7 +57,7 @@ public class CategoryService {
         } else {
             Firestore db = FirestoreClient.getFirestore();
             ApiFuture<WriteResult> collectionsApiFuture = db
-                    .collection("categories")
+                    .collection(COLLECTION)
                     .document(Integer.toString(id))
                     .set(category);
         }
@@ -63,7 +65,7 @@ public class CategoryService {
 
     public void deleteCategory(int id) {
         Firestore db = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = db.collection("categories").document(Integer.toString(id)).delete();
+        ApiFuture<WriteResult> writeResult = db.collection(COLLECTION).document(Integer.toString(id)).delete();
     }
 
 }
