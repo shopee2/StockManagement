@@ -22,7 +22,6 @@ public class ProductController {
         try {
             return productService.getProducts();
         } catch (Exception e) {
-            e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
