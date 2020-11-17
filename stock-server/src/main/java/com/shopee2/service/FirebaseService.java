@@ -49,7 +49,7 @@ public class FirebaseService {
         else throw new DocumentNotFoundException();
     }
 
-    public void updateCategory(int id, Category category) throws InterruptedException, ExecutionException, IdentifierMutationException {
+    public void updateCategory(int id, Category category) throws IdentifierMutationException {
         if (id != category.getId()) {
             throw new IdentifierMutationException();
         } else {
