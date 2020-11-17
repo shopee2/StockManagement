@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class FirebaseService {
+public class CategoryService {
 
     public void createCategory(Category category) {
         Firestore db = FirestoreClient.getFirestore();
