@@ -33,5 +33,4 @@ build/
 .vscode/
 .idea
 
-
-src/main/resources/*.json
+s2-stockmanagement-firebase-adminsdk-xg1dm-2f2ca8622e.json

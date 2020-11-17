@@ -10,15 +10,19 @@ import java.io.*;
 @Service
 public class FirebaseInitializer {
     @PostConstruct
-    public void initialize() throws IOException {
-        FileInputStream serviceAccount =
-                new FileInputStream("src/main/resources/s2-stockmanagement-firebase-adminsdk-xg1dm-2f2ca8622e.json");
+    public void initialize() {
+        try {
+            FileInputStream serviceAccount =
+                    new FileInputStream("./s2-stockmanagement-firebase-adminsdk-xg1dm-2f2ca8622e.json");
 
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://s2-stockmanagement.firebaseio.com")
-                .build();
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl("https://s2-stockmanagement.firebaseio.com")
+                    .build();
 
-        FirebaseApp.initializeApp(options);
+            FirebaseApp.initializeApp(options);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
