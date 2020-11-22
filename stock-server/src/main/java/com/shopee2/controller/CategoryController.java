@@ -1,7 +1,9 @@
 package com.shopee2.controller;
 
 import com.shopee2.model.Category;
+import com.shopee2.model.Product;
 import com.shopee2.service.CategoryService;
+import com.shopee2.service.ProductService;
 import com.shopee2.stock.DocumentNotFoundException;
 import com.shopee2.stock.IdentifierMutationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class CategoryController {
 
     @Autowired
     CategoryService categoryService;
+
+    @Autowired
+    ProductService productService;
 
     @GetMapping("/category")
     public List<Category> getCategories() {
@@ -56,5 +61,23 @@ public class CategoryController {
     @DeleteMapping("/category/{id}")
     public void deleteCategory(@PathVariable("id") int id) {
         categoryService.deleteCategory(id);
+    }
+
+    @GetMapping("/category/{id}/products")
+    public List<Product> getProducts(@PathVariable("id") int id) {
+        try {
+            return productService.getProductInCategory(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/category/{id}/count")
+    public int countProduct(@PathVariable("id") int id) {
+        try {
+            return productService.countProduct(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

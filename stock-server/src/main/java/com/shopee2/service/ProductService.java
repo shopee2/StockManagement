@@ -3,6 +3,7 @@ package com.shopee2.service;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.shopee2.model.Category;
 import com.shopee2.model.Product;
 import com.shopee2.stock.DocumentNotFoundException;
 import com.shopee2.stock.IdentifierMutationException;
@@ -66,6 +67,24 @@ public class ProductService {
     public void deleteProduct(int id) {
         Firestore db = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> writeResult = db.collection(COLLECTION).document(Integer.toString(id)).delete();
+    }
+
+    public List<Product> getProductInCategory(int categoryId) throws ExecutionException, InterruptedException {
+        Firestore db = FirestoreClient.getFirestore();
+        CollectionReference documentReference = db.collection(COLLECTION);
+
+        ApiFuture<QuerySnapshot> future = documentReference.whereEqualTo("categoryId", categoryId).get();
+        List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+
+        List<Product> result = new ArrayList<>();
+        if (!documents.isEmpty())
+            for (DocumentSnapshot snapshot : documents)
+                result.add(snapshot.toObject(Product.class));
+        return result;
+    }
+
+    public int countProduct(int categoryId) throws ExecutionException, InterruptedException {
+        return this.getProductInCategory(categoryId).size();
     }
 
 }
