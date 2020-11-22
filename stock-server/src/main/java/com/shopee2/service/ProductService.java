@@ -69,6 +69,13 @@ public class ProductService {
         ApiFuture<WriteResult> writeResult = db.collection(COLLECTION).document(Integer.toString(id)).delete();
     }
 
+    public void deleteProducts(List<Integer> productIds) {
+        for (int id : productIds) {
+            Firestore db = FirestoreClient.getFirestore();
+            ApiFuture<WriteResult> writeResult = db.collection(COLLECTION).document(Integer.toString(id)).delete();
+        }
+    }
+
     public List<Product> getProductInCategory(int categoryId) throws ExecutionException, InterruptedException {
         Firestore db = FirestoreClient.getFirestore();
         CollectionReference documentReference = db.collection(COLLECTION);

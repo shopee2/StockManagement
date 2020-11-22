@@ -57,4 +57,9 @@ public class ProductController {
     public void deleteProduct(@PathVariable("id") int id) {
         productService.deleteProduct(id);
     }
+
+    @DeleteMapping("/product/")
+    public void deleteProducts(@RequestBody List<Integer> ids) {
+        productService.deleteProducts(ids);
+    }
 }
