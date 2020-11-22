@@ -26,6 +26,12 @@ public class ProductService {
                 .set(product);
     }
 
+    public void createProducts(List<Product> products) {
+        for (Product product : products) {
+            this.createProduct(product);
+        }
+    }
+
     public List<Product> getProducts() throws ExecutionException, InterruptedException {
         Firestore db = FirestoreClient.getFirestore();
         CollectionReference documentReference = db.collection(COLLECTION);
@@ -71,8 +77,7 @@ public class ProductService {
 
     public void deleteProducts(List<Integer> productIds) {
         for (int id : productIds) {
-            Firestore db = FirestoreClient.getFirestore();
-            ApiFuture<WriteResult> writeResult = db.collection(COLLECTION).document(Integer.toString(id)).delete();
+            this.deleteProduct(id);
         }
     }
 

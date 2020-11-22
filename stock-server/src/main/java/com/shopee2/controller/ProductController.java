@@ -31,6 +31,11 @@ public class ProductController {
         productService.createProduct(product);
     }
 
+    @PostMapping("/products")
+    public void createProducts(@RequestBody List<Product> products) {
+        productService.createProducts(products);
+    }
+
     @GetMapping("/product/{id}")
     public Product getProduct(@PathVariable("id") int id) {
         try {
@@ -58,7 +63,7 @@ public class ProductController {
         productService.deleteProduct(id);
     }
 
-    @DeleteMapping("/product/")
+    @DeleteMapping("/products/")
     public void deleteProducts(@RequestBody List<Integer> ids) {
         productService.deleteProducts(ids);
     }
