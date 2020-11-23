@@ -118,7 +118,7 @@ export default {
   },
   methods: {
     async fetchData() {
-      const { data: productData } = await axios.get("http://localhost/product");
+      const { data: productData } = await axios.get("/product");
 
       if (this.catFilter) {
         this.products = productData.filter(
@@ -128,9 +128,7 @@ export default {
         this.products = productData;
       }
 
-      const { data: categoryData } = await axios.get(
-        "http://localhost/category"
-      );
+      const { data: categoryData } = await axios.get("/category");
 
       this.categories = categoryData;
     },
@@ -142,25 +140,22 @@ export default {
     async okHandle() {
       switch (this.modalMode) {
         case "add":
-          await axios.post("http://localhost/product", this.modalData);
+          await axios.post("/product", this.modalData);
           break;
         case "edit":
-          await axios.put(
-            `http://localhost/product/${this.modalData.id}`,
-            this.modalData
-          );
+          await axios.put(`/product/${this.modalData.id}`, this.modalData);
           break;
       }
       this.refreshWithParams();
     },
     async deleteCat(id) {
-      await fetch(`http://localhost/product/${id}`, {
+      await fetch(`/product/${id}`, {
         method: "delete",
       });
       this.refreshWithParams();
     },
     async editCat(id) {
-      const { data } = await axios.get(`http://localhost/product/${id}`);
+      const { data } = await axios.get(`/product/${id}`);
       this.modalData = data;
     },
     getCatName(id) {
