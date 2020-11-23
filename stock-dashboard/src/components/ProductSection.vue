@@ -15,6 +15,9 @@
     </h3>
     <hr />
     <b-table-lite :fields="productFields" :items="products">
+      <template #cell(categoryId)="data">
+        {{ getCatName(data.item.categoryId) }}
+      </template>
       <template #cell(actions)="data">
         <b-button
           variant="success"
@@ -92,10 +95,11 @@ export default {
         "price",
         "stock",
         "shopId",
-        "categoryId",
+        { key: "categoryId", label: "Category" },
         "actions",
       ],
       products: [],
+      categories: [],
       modalData: {
         id: undefined,
         sku: "",
@@ -113,10 +117,13 @@ export default {
   },
   methods: {
     async fetchData() {
+      const { data: productData } = await axios.get("http://localhost/product");
+      this.products = productData;
+
       const { data: categoryData } = await axios.get(
-        "http://localhost/product"
+        "http://localhost/category"
       );
-      this.products = categoryData;
+      this.categories = categoryData;
     },
     refreshWithParams() {
       const url = new URL(window.location.href);
@@ -146,6 +153,10 @@ export default {
     async editCat(id) {
       const { data } = await axios.get(`http://localhost/product/${id}`);
       this.modalData = data;
+    },
+    getCatName(id) {
+      const result = this.categories.find((item) => item.id === id);
+      return result.name;
     },
   },
   created() {
