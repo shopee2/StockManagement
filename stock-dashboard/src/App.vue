@@ -17,21 +17,27 @@
       </b-jumbotron>
 
       <template v-if="currentSection === 'category'">
-        <h3>Managing categories</h3>
+        <h3>Manage categories</h3>
         <hr />
         <b-table-lite :fields="categoryFields" :items="categories">
           <template #cell(actions)="data">
-            <b-button variant="danger">DELETE</b-button>
+            <b-button variant="success" class="mr-1">
+              <i class="fa fa-pencil"> </i>
+            </b-button>
+            <b-button variant="danger"><i class="fa fa-trash"></i></b-button>
           </template>
         </b-table-lite>
       </template>
 
       <template v-else-if="currentSection === 'product'">
-        <h3>Managing products</h3>
+        <h3>Manage products</h3>
         <hr />
         <b-table-lite :fields="productFields" :items="products">
           <template #cell(actions)="data">
-            <b-button variant="danger">DELETE</b-button>
+            <b-button variant="success" class="mr-1">
+              <i class="fa fa-pencil"> </i>
+            </b-button>
+            <b-button variant="danger"><i class="fa fa-trash"></i></b-button>
           </template>
         </b-table-lite>
       </template>
@@ -46,6 +52,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "App",
   data() {
@@ -81,6 +89,13 @@ export default {
         },
       ],
     };
+  },
+  async created() {
+    const { data: categoryData } = await axios.get("http://localhost/category");
+    this.categories = categoryData;
+
+    const { data: productData } = await axios.get("http://localhost/product");
+    this.products = productData;
   },
 };
 </script>
