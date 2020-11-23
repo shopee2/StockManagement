@@ -83,6 +83,7 @@
 import axios from "axios";
 
 export default {
+  props: ["catFilter"],
   data() {
     return {
       productFields: [
@@ -118,11 +119,19 @@ export default {
   methods: {
     async fetchData() {
       const { data: productData } = await axios.get("http://localhost/product");
-      this.products = productData;
+
+      if (this.catFilter) {
+        this.products = productData.filter(
+          (item) => item.categoryId == this.catFilter
+        );
+      } else {
+        this.products = productData;
+      }
 
       const { data: categoryData } = await axios.get(
         "http://localhost/category"
       );
+
       this.categories = categoryData;
     },
     refreshWithParams() {

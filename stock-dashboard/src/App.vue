@@ -20,7 +20,10 @@
 
       <CategorySection v-if="currentSection === 'category'" />
 
-      <ProductSection v-else-if="currentSection === 'product'" />
+      <ProductSection
+        v-else-if="currentSection === 'product'"
+        :catFilter="productCatFilter"
+      />
 
       <template v-else>
         <div class="text-muted text-center">
@@ -41,6 +44,7 @@ export default {
   data() {
     return {
       currentSection: undefined,
+      productCatFilter: undefined,
     };
   },
   created() {
@@ -48,6 +52,9 @@ export default {
     const params = new URLSearchParams(uri);
     const section = params.get("section");
     if (section) this.currentSection = section;
+
+    const catFilter = params.get("catfilter");
+    if (catFilter) this.productCatFilter = catFilter;
   },
 };
 </script>

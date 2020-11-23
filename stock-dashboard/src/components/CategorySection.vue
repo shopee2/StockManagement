@@ -41,7 +41,14 @@
         >
           <i class="fa fa-trash"></i>
         </b-button>
-        <b-button variant="primary">
+        <b-button
+          variant="primary"
+          @click="
+            () => {
+              goFilterCat(data.item.id);
+            }
+          "
+        >
           <i class="fa fa-chevron-right"></i>
         </b-button>
       </template>
@@ -112,6 +119,12 @@ export default {
     async editCat(id) {
       const { data } = await axios.get(`http://localhost/category/${id}`);
       this.modalData = data;
+    },
+    goFilterCat(id) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("section", "product");
+      url.searchParams.set("catfilter", id);
+      window.location.replace(url);
     },
   },
   created() {
