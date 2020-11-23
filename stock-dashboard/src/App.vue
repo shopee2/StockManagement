@@ -9,38 +9,18 @@
           @click="currentSection = 'category'"
           variant="primary"
           class="mr-1"
-          >Category</b-button
         >
-        <b-button @click="currentSection = 'product'" variant="primary"
-          >Product</b-button
-        >
+          Category
+        </b-button>
+
+        <b-button @click="currentSection = 'product'" variant="primary">
+          Product
+        </b-button>
       </b-jumbotron>
 
-      <template v-if="currentSection === 'category'">
-        <h3>Manage categories</h3>
-        <hr />
-        <b-table-lite :fields="categoryFields" :items="categories">
-          <template #cell(actions)="data">
-            <b-button variant="success" class="mr-1">
-              <i class="fa fa-pencil"> </i>
-            </b-button>
-            <b-button variant="danger"><i class="fa fa-trash"></i></b-button>
-          </template>
-        </b-table-lite>
-      </template>
+      <CategorySection v-if="currentSection === 'category'" />
 
-      <template v-else-if="currentSection === 'product'">
-        <h3>Manage products</h3>
-        <hr />
-        <b-table-lite :fields="productFields" :items="products">
-          <template #cell(actions)="data">
-            <b-button variant="success" class="mr-1">
-              <i class="fa fa-pencil"> </i>
-            </b-button>
-            <b-button variant="danger"><i class="fa fa-trash"></i></b-button>
-          </template>
-        </b-table-lite>
-      </template>
+      <ProductSection v-else-if="currentSection === 'product'" />
 
       <template v-else>
         <div class="text-muted text-center">
@@ -52,50 +32,22 @@
 </template>
 
 <script>
-import axios from "axios";
+import CategorySection from "./components/CategorySection.vue";
+import ProductSection from "./components/ProductSection.vue";
 
 export default {
+  components: { CategorySection, ProductSection },
   name: "App",
   data() {
     return {
       currentSection: undefined,
-      categoryFields: ["id", "name", "description", "actions"],
-      categories: [{ id: 12, name: "rasas", description: "231" }],
-      productFields: [
-        "id",
-        "sku",
-        "name",
-        "description",
-        "imageUrl",
-        "weight",
-        "price",
-        "stock",
-        "shopId",
-        "categoryId",
-        "actions",
-      ],
-      products: [
-        {
-          id: 1,
-          sku: "sarssa",
-          name: "arsw",
-          description: "arsras",
-          imageUrl: "arsar",
-          weight: 1234,
-          price: 1112,
-          stock: 8,
-          shopId: 4,
-          categoryId: 2,
-        },
-      ],
     };
   },
-  async created() {
-    const { data: categoryData } = await axios.get("http://localhost/category");
-    this.categories = categoryData;
-
-    const { data: productData } = await axios.get("http://localhost/product");
-    this.products = productData;
+  created() {
+    const uri = window.location.search.substring(1);
+    const params = new URLSearchParams(uri);
+    const section = params.get("section");
+    if (section) this.currentSection = section;
   },
 };
 </script>
