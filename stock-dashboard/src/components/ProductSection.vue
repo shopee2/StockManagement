@@ -18,6 +18,9 @@
       <template #cell(categoryId)="data">
         {{ getCatName(data.item.categoryId) }}
       </template>
+      <template #cell(shopId)="data">
+        {{ getShopName(data.item.shopId) }}
+      </template>
       <template #cell(actions)="data">
         <b-button
           variant="success"
@@ -101,6 +104,7 @@ export default {
       ],
       products: [],
       categories: [],
+      shops: [],
       modalData: {
         id: undefined,
         sku: "",
@@ -131,6 +135,11 @@ export default {
       const { data: categoryData } = await axios.get("/category");
 
       this.categories = categoryData;
+
+      const { data: shopData } = await axios.get(
+        "https://sop-sale.azurewebsites.net/api/shop"
+      );
+      this.shops = shopData;
     },
     refreshWithParams() {
       const url = new URL(window.location.href);
@@ -160,6 +169,10 @@ export default {
     },
     getCatName(id) {
       const result = this.categories.find((item) => item.id === id);
+      return result.name;
+    },
+    getShopName(id) {
+      const result = this.shops.find((item) => item.id === id);
       return result.name;
     },
   },
